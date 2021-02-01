@@ -70,10 +70,10 @@ const config: NuxtConfig = {
   ],
 
   basic: {
-    name: 'ampirzadeh',
-    pass: 'pirzadeh',
+    name: process.env.BASIC_AUTH_USERNAME,
+    pass: process.env.BASIC_AUTH_PASSWORD,
     enabled: true,
-    match: /(.*admin)/g
+    match: /(.*admin.*$)/g
   },
 
   axios: {
