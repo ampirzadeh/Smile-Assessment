@@ -36,7 +36,7 @@
     </div>
 
     <div class="flex" v-if="step !== 0">
-      <div class="flex ml-auto mr-10 md:w-4/12">
+      <div class="flex ml-auto mr-10 lg:w-4/12">
         <nuxt-link
           class="flex justify-center w-full text-white align-middle transition-all duration-300 bg-transparent btn hover:bg-white hover:text-white hover:opacity-100 hover:bg-opacity-25 focus:shadow-outline focus:outline-none"
           aria-label="Previous"
