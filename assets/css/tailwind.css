@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border p-0 m-0;
+  }
+  html,
+  body,
+  main {
+    @apply w-full h-full p-0 m-0 overflow-x-hidden text-gray-900 bg-gray-200 font-montserrat;
+  }
+  h1 {
+    @apply text-2xl font-libreBaskerville;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-lg;
+  }
+  a {
+    &:focus,
+    &:hover,
+    &:active {
+      @apply opacity-75;
+    }
+  }
+  /* .input {
+    @apply block w-full p-2 mb-4 transition-all duration-300 bg-gray-300 rounded-md outline-none;
+    &:hover,
+    &:focus {
+      @apply bg-gray-400;
+    }
+  } */
+  .btn {
+    @apply inline-block w-auto h-auto p-2 mx-1 my-3 text-xl text-center transition-all duration-300 rounded-lg bg-gray-200;
+    /* &:focus,
+    &:hover,
+    &:active {
+      @apply bg-gray-400 text-accent;
+    } */
+  }
+}

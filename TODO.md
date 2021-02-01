@@ -1,0 +1,8 @@
+- Add captcha
+- error handle
+- ~~search admin~~
+- ~~images in admin~~
+- ~~push images~~
+- ~~space between thank you and paragraph and increase line height~~
+- ~~start again button~~
+- authentication for admin api
