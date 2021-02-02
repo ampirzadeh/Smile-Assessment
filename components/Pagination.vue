@@ -6,7 +6,7 @@
       class="flex items-center justify-center w-10 h-10 p-5 mx-1 rounded-full"
       :class="$route.query.page == i ? 'bg-accent text-white' : 'bg-white'"
       :to="{ query: { ...$route.query, page: i } }"
-      v-for="i in max - 1 > max * perPage - 1 ? max * perPage - 1 : max - 1"
+      v-for="i in max > max * perPage ? max * perPage : max"
       :key="i"
     >
       {{ i }}

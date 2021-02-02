@@ -5,10 +5,13 @@ import AWS from 'aws-sdk'
 import multer from 'multer'
 import connectToDb from './db/connect'
 import Record, { Record as RecordInterface } from './db/Record'
+import basicAuth from 'express-basic-auth'
+import helmet from 'helmet'
 
 const app = express()
 
 app.use(express.json())
+app.use(helmet())
 
 connectToDb()
 
@@ -49,36 +52,58 @@ const getS3Object = (Key: string) =>
     )
   )
 
-app.post('/images', async (req, res) => {
-  const objects: string[] = req.body.objects
+app.use(
+  '/login',
+  process.env.BASIC_AUTH_USERNAME && process.env.BASIC_AUTH_PASSWORD
+    ? basicAuth({
+        users: {
+          [process.env.BASIC_AUTH_USERNAME]: process.env.BASIC_AUTH_PASSWORD
+        }
+      })
+    : (req, res, next) => res.sendStatus(403),
+  (req, res) => res.sendStatus(200)
+)
 
-  return Promise.all(
-    objects.length === 1
-      ? [getS3Object(objects[0])]
-      : objects.length === 2
-      ? [getS3Object(objects[0]), getS3Object(objects[1])]
-      : objects.length === 3
-      ? [
-          getS3Object(objects[0]),
-          getS3Object(objects[1]),
-          getS3Object(objects[2])
-        ]
-      : objects.length === 4
-      ? [
-          getS3Object(objects[0]),
-          getS3Object(objects[1]),
-          getS3Object(objects[2]),
-          getS3Object(objects[3])
-        ]
-      : []
-  )
-    .then(images => {
-      res.json({ images })
-    })
-    .catch(res => {
-      console.log(`Error Getting Templates: ${res}`)
-    })
-})
+app.post(
+  '/images',
+  process.env.BASIC_AUTH_USERNAME && process.env.BASIC_AUTH_PASSWORD
+    ? basicAuth({
+        users: {
+          [process.env.BASIC_AUTH_USERNAME]: process.env.BASIC_AUTH_PASSWORD
+        }
+      })
+    : (req, res, next) => res.sendStatus(403),
+  async (req, res) => {
+    const objects: string[] = req.body.objects
+
+    return Promise.all(
+      objects.length === 1
+        ? [getS3Object(objects[0])]
+        : objects.length === 2
+        ? [getS3Object(objects[0]), getS3Object(objects[1])]
+        : objects.length === 3
+        ? [
+            getS3Object(objects[0]),
+            getS3Object(objects[1]),
+            getS3Object(objects[2])
+          ]
+        : objects.length === 4
+        ? [
+            getS3Object(objects[0]),
+            getS3Object(objects[1]),
+            getS3Object(objects[2]),
+            getS3Object(objects[3])
+          ]
+        : []
+    )
+      .then(images => {
+        res.json({ images })
+      })
+      .catch(res => {
+        console.log(`Error Getting Templates: ${res}`)
+      })
+  }
+)
 
 // Import API Routes
 app.post('/saveRecord', upload.array('images', 4), async (req, res) => {
@@ -131,44 +156,118 @@ app.post('/saveRecord', upload.array('images', 4), async (req, res) => {
   }
 })
 
-app.get('/records', async (req, res) => {
-  try {
-    const search = new RegExp(`^.*${req.query.search}.*$`, 'g')
+app.get(
+  '/records',
+  process.env.BASIC_AUTH_USERNAME && process.env.BASIC_AUTH_PASSWORD
+    ? basicAuth({
+        users: {
+          [process.env.BASIC_AUTH_USERNAME]: process.env.BASIC_AUTH_PASSWORD
+        }
+      })
+    : (req, res, next) => res.sendStatus(403),
+  async (req, res) => {
+    try {
+      if (req.query.id) {
+        const record = await Record.findById(req.query.id)
+        const objects: string[] = req.body.objects
 
-    const records = await Record.find(
-      req.query.search
-        ? {
-            hasBeenAnsweredTo: false,
-            $or: [
-              { firstName: search },
-              { lastName: search },
-              { email: search },
-              { phone: search }
-            ]
-          }
-        : { hasBeenAnsweredTo: false }
-    )
-      .skip(
-        (parseInt(req.query.page as string) - 1) *
-          parseInt(req.query.per_page as string)
-      )
-      .limit(parseInt(req.query.per_page as string) || 10).sort('-createdAt')
+        return Promise.all(
+          objects.length === 1
+            ? [getS3Object(objects[0])]
+            : objects.length === 2
+            ? [getS3Object(objects[0]), getS3Object(objects[1])]
+            : objects.length === 3
+            ? [
+                getS3Object(objects[0]),
+                getS3Object(objects[1]),
+                getS3Object(objects[2])
+              ]
+            : objects.length === 4
+            ? [
+                getS3Object(objects[0]),
+                getS3Object(objects[1]),
+                getS3Object(objects[2]),
+                getS3Object(objects[3])
+              ]
+            : []
+        )
+          .then(images => {
+            res.json({
+              images,
+              // images: [
+              //   'https://fakeimg.pl/300/',
+              //   'https://fakeimg.pl/250x100/',
+              //   'https://fakeimg.pl/350x100/',
+              //   'https://fakeimg.pl/350/'
+              // ],
+              record
+            })
+          })
+          .catch(res => {
+            console.log(`Error Getting Templates: ${res}`)
+          })
+      } else {
+        const search = new RegExp(`^.*[${req.query.search}][a-bA-B]*.*$`, 'g')
 
-    const recordsCount = await Record.countDocuments({
-      hasBeenAnsweredTo: false
-    })
+        const records = await Record.find(
+          req.query.search
+            ? {
+                hasBeenAnsweredTo: false,
+                $or: [
+                  { firstName: search },
+                  { lastName: search },
+                  { email: search },
+                  { phone: search }
+                ]
+              }
+            : { hasBeenAnsweredTo: false }
+        )
+          .skip(
+            (parseInt(req.query.page as string) - 1) *
+              parseInt(req.query.per_page as string)
+          )
+          .limit(parseInt(req.query.per_page as string) || 10)
+          .sort('-createdAt')
 
-    res.json({
-      records,
-      success: true,
-      recordsCount
-    })
-  } catch (error) {
-    console.log(error)
-    res.json({ success: false, error })
+        const recordsCount = await Record.countDocuments({
+          hasBeenAnsweredTo: false
+        })
+
+        res.json({
+          records,
+          success: true,
+          recordsCount
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      res.json({ success: false, error })
+    }
   }
-})
+)
 
+app.post(
+  '/answered',
+  process.env.BASIC_AUTH_USERNAME && process.env.BASIC_AUTH_PASSWORD
+    ? basicAuth({
+        users: {
+          [process.env.BASIC_AUTH_USERNAME]: process.env.BASIC_AUTH_PASSWORD
+        }
+      })
+    : (req, res, next) => res.sendStatus(403),
+  async (req, res) => {
+    try {
+      await Record.findOneAndUpdate(req.body.id, { hasBeenAnsweredTo: true })
+
+      res.json({
+        success: true
+      })
+    } catch (error) {
+      console.log(error)
+      res.json({ success: false })
+    }
+  }
+)
 // Export express app
 export default app
 

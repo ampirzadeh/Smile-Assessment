@@ -35,7 +35,7 @@ const config: NuxtConfig = {
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~plugins/axios'],
+  plugins: ['~plugins/axios', '~plugins/vue-js-modal'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -65,16 +65,10 @@ const config: NuxtConfig = {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    'nuxt-basic-auth-module'
+    'nuxt-protected-mailto'
+
     // '@nuxtjs/recaptcha'
   ],
-
-  basic: {
-    name: process.env.BASIC_AUTH_USERNAME,
-    pass: process.env.BASIC_AUTH_PASSWORD,
-    enabled: true,
-    match: /(.*admin.*$)/g
-  },
 
   axios: {
     baseURL:
@@ -93,6 +87,11 @@ const config: NuxtConfig = {
     postcss: {
       plugins: {
         'postcss-nested': {}
+      }
+    },
+    html: {
+      minify: {
+        decodeEntities: false
       }
     }
   }

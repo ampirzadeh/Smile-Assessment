@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen p-10 bg-bgColor">
-    <div class="flex">
+    <div class="flex mb-6">
       <label class="flex flex-col flex-1 max-w-screen-md mx-12 mr-auto">
         Search email, first name, last name, or phone:
         <input
@@ -34,71 +34,35 @@
       </label>
     </div>
 
-    <div class="flex flex-col items-center justify-center my-20">
-      <table class="max-w-screen-md bg-white shadow-lg">
-        <tr>
-          <th
-            v-for="property in properties"
-            :key="property"
-            class="px-4 py-2 text-left bg-blue-100 border xl:px-8"
-          >
-            <small>
-              {{
-                property
-                  .replace('_', '')
-                  .charAt(0)
-                  .toLocaleUpperCase() +
-                  property.replace('_', '').slice(1, property.length)
-              }}
-            </small>
-          </th>
-        </tr>
-        <tr v-for="record in records" :key="record._id">
-          <td v-for="property in properties" :key="property" class="p-2 border">
-            <small>
-              <template
-                v-if="property === 'createdAt' || property === 'updatedAt'"
-              >
-                {{ new Date(record[property]).toLocaleString() }}
-              </template>
-              <template v-else-if="property === 'sufferings'">
-                {{ record[property].join(', ') }}
-              </template>
-              <template v-else-if="property === 'email'">
-                <a
-                  class="font-semibold text-accent"
-                  :href="`mailto:${record[property]}`"
-                  :title="record[property]"
-                  >{{ record[property] }}</a
-                >
-              </template>
-              <template v-else-if="property === 'phone'">
-                <a
-                  class="font-semibold text-accent"
-                  :href="`tel:${record[property]}`"
-                  :title="record[property]"
-                  >{{ record[property] }}</a
-                >
-              </template>
-              <template v-else-if="property === 'images'">
-                <nuxt-link
-                  :to="{
-                    name: 'admin-images',
-                    query: { images: record[property].join('__') }
-                  }"
-                  class="py-1 text-xs font-semibold text-white bg-opacity-75 btn bg-acce bg-accent hover:bg-opacity-100 focus:bg-opacity-100"
-                  prefetch
-                >
-                  View Images
-                </nuxt-link>
-              </template>
-              <template v-else>
-                {{ record[property] }}
-              </template>
-            </small>
-          </td>
-        </tr>
-      </table>
+    <div class="flex flex-row gap-2">
+      <nuxt-link
+        :to="{ name: 'admin-id', params: { id: record._id } }"
+        v-for="record in records"
+        class="flex flex-col w-full p-6 text-sm transition-all duration-300 bg-white rounded-md shadow md:w-1/3 lg:w-1/4"
+        :key="record._id"
+      >
+        <h1 class="text-lg font-semibold font-montserrat">
+          {{ `${record.firstName} ${record.lastName}` }}
+        </h1>
+        <small class="text-opacity-75">
+          {{ titlize(record.gender) }}, {{ record.age }}
+        </small>
+
+        <p>
+          <b class="font-semibold">Sufferings:</b>
+          {{ record.sufferings.splice(0, 2).join(', ') }}
+        </p>
+
+        <p>
+          <b class="font-semibold">Reasons:</b>
+          {{ record.reasons.splice(0, 2).join(', ') }}
+        </p>
+
+        <p>
+          <b class="font-semibold">Concers: </b>
+          {{ record.concerns.slice(0, 100) }}
+        </p>
+      </nuxt-link>
     </div>
 
     <Pagination v-if="pagesCount > 1" :max="pagesCount" :per-page="perPage" />
@@ -109,6 +73,7 @@
 import Vue from 'vue'
 import { IRecord } from '~/api/db/Record'
 export default Vue.extend({
+  middleware: 'locked',
   watch: {
     '$route.query'() {
       this.$fetch()
@@ -125,6 +90,10 @@ export default Vue.extend({
   },
   async fetch() {
     const { records, recordsCount } = await this.$axios.$get('/api/records', {
+      auth: {
+        username: this.$store.state.username,
+        password: this.$store.state.password
+      },
       params: {
         page: this.$route.query.page || 1,
         per_page: this.$route.query.per_page || 10,
@@ -154,6 +123,11 @@ export default Vue.extend({
         'email',
         'images'
       ]
+    }
+  },
+  methods: {
+    titlize(text: string): string {
+      return text.charAt(0).toLocaleUpperCase() + text.slice(1, text.length)
     }
   }
 })
