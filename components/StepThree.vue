@@ -22,7 +22,7 @@
     </Question>
 
     <Question title="What don't you like about your teeth?">
-      <label>
+      <label class="w-full">
         <textarea
           class="block w-full mt-1 text-gray-900 resize-none rounded-xl form-textarea"
           v-model="teethDislike"

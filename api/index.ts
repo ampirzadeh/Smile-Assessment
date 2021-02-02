@@ -17,7 +17,7 @@ const s3 = new AWS.S3()
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: 'smileassessmentbucket',
+    bucket: process.env.BUCKET as string,
     metadata: (req, file, cb) => {
       cb(null, { fieldName: file.fieldname })
     },
@@ -37,7 +37,7 @@ const getS3Object = (Key: string) =>
     s3.getObject(
       {
         Key,
-        Bucket: 'smileassessmentbucket'
+        Bucket: process.env.BUCKET as string
       },
       (err, data) => {
         if (err) reject(err)

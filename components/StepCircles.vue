@@ -6,7 +6,7 @@
       :to="
         i <= maxStep ? { query: { step: i.toString() } } : { query: { step } }
       "
-      class="inline-flex items-center justify-center w-8 h-8 p-2 mx-1 font-semibold border-2 border-solid rounded-full border-circleBorder"
+      class="inline-flex items-center justify-center w-4 h-4 p-2 mx-1 text-xs font-semibold border-2 border-solid rounded-full md:text-sm lg:w-8 lg:h-8 border-circleBorder"
       :class="
         step === i
           ? `bg-accent text-white`

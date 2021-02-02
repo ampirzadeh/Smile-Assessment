@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen bg-right-top bg-no-repeat bg-bgColor lg:bg-bgImage">
     <div class="md:flex">
-      <section class="px-2 py-16 text-white md:px-24 lg:w-8/12">
+      <section class="px-2 py-16 text-white md:px-24 xl:w-8/12">
         <h1
-          :class="step ? 'text-4xl' : 'text-5xl'"
-          class="transition-all duration-200"
+          :class="step ? 'text-2xl' : 'text-3xl'"
+          class="transition-all duration-200 delay-200"
         >
           Smile Assessment Tool
         </h1>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="flex" v-if="step !== 0">
-      <div class="flex ml-auto mr-10 lg:w-4/12">
+      <div class="flex w-10/12 ml-auto mr-10 md:w-4/12">
         <nuxt-link
           class="flex justify-center w-full text-white align-middle transition-all duration-300 bg-transparent btn hover:bg-white hover:text-white hover:opacity-100 hover:bg-opacity-25 focus:shadow-outline focus:outline-none"
           aria-label="Previous"
@@ -49,7 +49,7 @@
 
         <nuxt-link
           tag="button"
-          class="flex justify-center w-full align-middle bg-white border border-solid border-accent text-accent btn hover:bg-gray-200 focus:shadow-outline focus:outline-none"
+          class="flex justify-center w-full pl-6 align-middle bg-white border border-solid border-accent text-accent btn hover:bg-gray-200 focus:shadow-outline focus:outline-none"
           aria-label="next"
           title="Next"
           v-if="step !== 6"

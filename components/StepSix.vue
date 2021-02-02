@@ -7,7 +7,7 @@
         details below:
       </p>
 
-      <form>
+      <form class="w-full">
         <label class="block my-6">
           <span class="hidden">First Name</span>
           <input

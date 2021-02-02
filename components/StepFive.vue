@@ -2,23 +2,32 @@
   <QuestionsContainer>
     <Question title="Upload your photos:">
       <p>Use sample photos and upload one photo for each sample</p>
-      <div class="flex flex-col md:flex-row">
-        <div class="w-full mx-auto md:mx-0 md:w-1/2">
+      <div class="flex flex-col mx-auto mt-4 md:flex-row">
+        <div class="hidden w-1/2 h-full mb-6 md:block">
           <ImageDropZone :value="showImages" @input="updateshowImages" />
+        </div>
+        <div class="w-full mx-auto mb-6 md:hidden md:mx-0">
+          <input
+            :disabled="showImages.length >= 4"
+            multiple
+            @input="updateshowImages($event.target.files)"
+            type="file"
+            accept="image/*"
+          />
         </div>
 
         <div
-          class="flex flex-row flex-wrap items-center max-w-screen-sm px-6 mx-auto overflow-x-hidden overflow-y-auto md:mx-0 md:w-1/2"
+          class="flex flex-col flex-wrap items-start justify-between max-w-screen-sm gap-1 mx-auto overflow-x-hidden overflow-y-auto md:flex-row md:px-6 md:mx-0 md:w-1/2"
         >
           <div
-            class="relative h-24 mx-2 shadow-md rounded-3xl md:w-5/12"
+            class="relative flex-1 w-full shadow-md md:flex-initial rounded-3xl md:w-5/12"
             v-for="(image, index) in showImages.length
               ? showImages
               : ['front-photo', 'smile', 'left-smile', 'right-smile']"
             :key="image"
           >
             <img
-              class="object-cover w-full h-24 bg-center rounded-md"
+              class="object-cover w-full bg-center rounded-md"
               alt="Image"
               :src="showImages.length ? image : `/images/samples/${image}.png`"
             />
@@ -61,8 +70,9 @@ export default Vue.extend({
           this.images.push(file)
         }
       }
-      if (this.showImages.length > 4) this.showImages =  this.showImages.slice(0, 4)
-      if (this.images.length > 4) this.images =  this.images.slice(0, 4)
+      if (this.showImages.length > 4)
+        this.showImages = this.showImages.slice(0, 4)
+      if (this.images.length > 4) this.images = this.images.slice(0, 4)
     },
     removeImage(index: number) {
       this.showImages.splice(index, 1)

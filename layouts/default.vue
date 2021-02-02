@@ -4,7 +4,7 @@
       class="flex items-center justify-between w-full px-6 py-2 align-middle bg-white"
     >
       <img
-        class="w-auto h-16"
+        class="w-auto h-10 md:h-16"
         src="~/assets/icons/logo.png"
         alt="Museum Dental Suites"
       />

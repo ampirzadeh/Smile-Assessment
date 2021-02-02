@@ -4,10 +4,10 @@
     @click="clickFileInput"
     @drop.prevent="handleDrop"
     @dragover.prevent="() => {}"
-    class="flex flex-col justify-center w-full p-10 text-center text-gray-600 align-middle border-4 border-gray-600 border-dashed rounded-md select-none sm:p-16"
+    class="flex flex-col items-center justify-center w-full h-full py-4 text-center text-gray-600 border-4 border-gray-600 border-dashed rounded-md select-none md:mb-0"
   >
-    <ImageIcon class="w-24 h-24 mx-auto" />
-    <h2 class="font-semibold text-black">
+    <ImageIcon class="w-16 h-16 mx-auto lg:w-24 lg:h-24" />
+    <h2 class="text-lg font-semibold text-black">
       Drag & Drop
     </h2>
     <p class="text-sm text-gray-800">
