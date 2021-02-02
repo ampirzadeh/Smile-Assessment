@@ -21,15 +21,15 @@
       </p>
 
       <p
-        v-if="record.interestedTreatments && record.interestedTreatments.length"
+        v-if="record.treatments && record.treatments.length"
       >
         <b class="font-semibold">Interested Treatments: </b>
-        {{ record.interestedTreatments.join(', ') }}
+        {{ record.treatments.join(', ') }}
       </p>
 
-      <p v-if="record.reason">
+      <p v-if="record.reasons.length">
         <b class="font-semibold">Reason: </b>
-        {{ record.reason }}
+        {{ record.reasons.join(', ') }}
       </p>
       <p v-if="record.teethDislike">
         <b class="font-semibold">Teeth Dislike: </b> {{ record.teethDislike }}
