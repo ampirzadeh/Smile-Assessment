@@ -6,9 +6,7 @@
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
-    "generate": "nuxt-ts generate",
-    "docs:dev": "vuepress dev api\\docs",
-    "docs:build": "vuepress build api\\docs"
+    "generate": "nuxt-ts generate"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
@@ -39,7 +37,6 @@
     "@types/multer-s3": "^2.7.9",
     "@types/passport": "^1.0.5",
     "@types/passport-http": "^0.3.8",
-    "tailwindcss-debug-screens": "^2.0.0",
-    "vuepress": "^1.8.0"
+    "tailwindcss-debug-screens": "^2.0.0"
   }
 }
