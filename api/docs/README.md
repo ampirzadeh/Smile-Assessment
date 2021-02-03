@@ -41,12 +41,9 @@
   - Treat bleeding gums
   - Another reason
 
-:::tip
-The provided values are only examples and any value can be used
-:::
+**The provided values are only examples and any value can be used**
 
-:::tip
+
 Due to images being in the request body, `Content-Type` must be set to `multipart/form-data` and while using `multipart/form-data`
 it is not possible to use arrays or numbers.
 So, they'll must just be provided as strings (arrays being like: `['a', 'b', 'c']` => `a,b,c` - `Array.join(',')`)
-:::
