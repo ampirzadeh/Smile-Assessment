@@ -1,9 +1,6 @@
 import { NuxtConfig } from '@nuxt/types'
 
 const config: NuxtConfig = {
-  server: {
-    host: '0.0.0.0'
-  },
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
