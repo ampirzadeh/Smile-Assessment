@@ -2,7 +2,7 @@
   <QuestionsContainer>
     <Question title="Upload your photos:">
       <p>Use sample photos and upload one photo for each sample</p>
-      <div class="flex flex-col mx-auto mt-4 md:flex-row">
+      <div class="flex flex-col max-w-full mx-auto mt-4 md:flex-row">
         <div class="hidden w-1/2 h-full mb-6 md:block">
           <ImageDropZone :value="showImages" @input="updateshowImages" />
         </div>
@@ -17,17 +17,17 @@
         </div>
 
         <div
-          class="flex flex-col flex-wrap items-start justify-between max-w-screen-sm gap-1 mx-auto overflow-x-hidden overflow-y-auto md:flex-row md:px-6 md:mx-0 md:w-1/2"
+          class="container flex flex-col flex-wrap items-start justify-around gap-1 px-0 mx-auto overflow-x-hidden overflow-y-auto md:max-w-screen-sm md:flex-row md:px-6 md:w-1/2"
         >
           <div
-            class="relative flex-1 w-full shadow-md md:flex-initial rounded-3xl md:w-5/12"
+            class="relative w-full my-1 shadow-md sm:flex-initial rounded-3xl md:w-5/12"
             v-for="(image, index) in showImages.length
               ? showImages
               : ['front-photo', 'smile', 'left-smile', 'right-smile']"
             :key="image"
           >
             <img
-              class="object-cover w-full bg-center rounded-md"
+              class="object-cover w-full h-full bg-center rounded-md md:h-20 lg:h-32"
               alt="Image"
               :src="showImages.length ? image : `/images/samples/${image}.png`"
             />

@@ -11,7 +11,7 @@ app.use(helmet())
 
 connectToDb()
 
-app.use(router)
+app.use('/', router)
 
 // Export express app
 export default app

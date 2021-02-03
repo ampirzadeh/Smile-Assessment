@@ -83,7 +83,14 @@
 import Vue from 'vue'
 import IconArrowRight from '~/assets/icons/arrow-right.svg?inline'
 import IconArrowLeft from '~/assets/icons/arrow-left.svg?inline'
-import { StepFour, StepOne, StepThree, StepTwo, StepFive, StepSix } from '../@types'
+import {
+  StepFour,
+  StepOne,
+  StepThree,
+  StepTwo,
+  StepFive,
+  StepSix
+} from '../@types'
 
 export default Vue.extend({
   head: {
@@ -100,7 +107,7 @@ export default Vue.extend({
       stepTwo: {} as StepTwo,
       stepThree: {} as StepThree,
       stepFour: {} as StepFour,
-      stepFive: {images: []} as StepFive,
+      stepFive: { images: [] } as StepFive,
       stepSix: {} as StepSix
     }
   },
@@ -175,20 +182,26 @@ export default Vue.extend({
           })
           break
         case 3:
-          requiredFields = ['reasons', 'teethDislike']
-          requiredFields.map(field => {
-            if (
-              !(
-                this.stepThree.hasOwnProperty(field) &&
-                this.stepThree[field]?.length
-              )
-            ) {
-              isValid = false
-            }
-          })
-          break
+          if (
+            this.stepThree.hasOwnProperty('reasons') &&
+            this.stepThree['reasons']?.length
+          ) {
+            requiredFields = []
+            if (this.stepThree.reasons.includes('Other'))
+              requiredFields.push('teethDislike')
+            requiredFields.map(field => {
+              if (
+                !(
+                  this.stepThree.hasOwnProperty(field) &&
+                  this.stepThree[field]?.length
+                )
+              ) {
+                isValid = false
+              }
+            })
+            break
+          }
         case 4:
-          // 'firstName', 'lastName', 'email', 'phone'
           requiredFields = ['treatments']
           requiredFields.map(field => {
             if (
@@ -202,7 +215,6 @@ export default Vue.extend({
           })
           break
         case 5:
-          // 'firstName', 'lastName', 'email', 'phone'
           requiredFields = ['images']
           requiredFields.map(field => {
             if (

@@ -1,4 +1,5 @@
 import { Handler } from 'express'
+import { getS3Object } from '../aws'
 import Record, { Record as RecordInterface } from '../db/Record'
 
 export const newRecord: Handler = async (req, res) => {
@@ -17,6 +18,14 @@ export const newRecord: Handler = async (req, res) => {
       concerns,
       treatments
     }: RecordInterface = req.body
+
+    const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const phoneNumberRegEx = /^\+\d+$/
+    if (
+      (!!email && !emailRegEx.test(email.toLocaleLowerCase())) ||
+      (!!phone && !phoneNumberRegEx.test(phone.toString()))
+    )
+      res.sendStatus(400)
 
     const imageNames: Array<string> = []
     const fileArray = req.files
@@ -50,7 +59,6 @@ export const newRecord: Handler = async (req, res) => {
     res.json({ success: false, error })
   }
 }
-
 
 const AllRecords: Handler = async (req, res) => {
   try {
@@ -95,38 +103,38 @@ const OneRecord: Handler = async (req, res, next) => {
   const record = await Record.findById(req.query.id)
   const objects: string[] = req.body.objects
 
-  // return Promise.all(
-  //   objects.length === 1
-  //     ? [getS3Object(objects[0])]
-  //     : objects.length === 2
-  //     ? [getS3Object(objects[0]), getS3Object(objects[1])]
-  //     : objects.length === 3
-  //     ? [
-  //         getS3Object(objects[0]),
-  //         getS3Object(objects[1]),
-  //         getS3Object(objects[2])
-  //       ]
-  //     : objects.length === 4
-  //     ? [
-  //         getS3Object(objects[0]),
-  //         getS3Object(objects[1]),
-  //         getS3Object(objects[2]),
-  //         getS3Object(objects[3])
-  //       ]
-  //     : []
-  // )
-  //   .then(images => {
-  res.json({
-    // images,
-    record
-  })
-  // })
-  // .catch(res => {
-  //   console.log(`Error Getting Templates: ${res}`)
-  // })
+  return Promise.all(
+    objects.length === 1
+      ? [getS3Object(objects[0])]
+      : objects.length === 2
+      ? [getS3Object(objects[0]), getS3Object(objects[1])]
+      : objects.length === 3
+      ? [
+          getS3Object(objects[0]),
+          getS3Object(objects[1]),
+          getS3Object(objects[2])
+        ]
+      : objects.length === 4
+      ? [
+          getS3Object(objects[0]),
+          getS3Object(objects[1]),
+          getS3Object(objects[2]),
+          getS3Object(objects[3])
+        ]
+      : []
+  )
+    .then(images => {
+      res.json({
+        images,
+        record
+      })
+    })
+    .catch(res => {
+      console.log(`Error Getting Templates: ${res}`)
+    })
 }
 
-const recordController: Handler = (req, res, next) => {
+const recordController: Handler = async (req, res, next) => {
   if (req.query.id) {
     OneRecord(req, res, next)
   } else {

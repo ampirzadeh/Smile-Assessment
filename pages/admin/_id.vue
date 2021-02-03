@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex flex-col mx-auto mt-10">
+  <div class="container flex flex-col p-4 mx-auto mt-10">
     <header>
       <h1 class="text-2xl font-semibold font-montserrat">
         {{ record.firstName }} {{ record.lastName }}
@@ -20,9 +20,7 @@
         {{ record.sufferings.join(', ') }}
       </p>
 
-      <p
-        v-if="record.treatments && record.treatments.length"
-      >
+      <p v-if="record.treatments && record.treatments.length">
         <b class="font-semibold">Interested Treatments: </b>
         {{ record.treatments.join(', ') }}
       </p>
@@ -90,23 +88,25 @@
         />
       </label>
 
-      <Mailto
-        :mail="record.email"
-        :subject="emailSubject"
-        title="Write me a email"
-        href="mailto:"
-        class="w-full h-full py-3 text-base bg-primary btn"
-        type="button"
-        :body="emailBody"
-      >
-        Email
-      </Mailto>
+      <div class="md:flex">
+        <Mailto
+          :mail="record.email"
+          :subject="emailSubject"
+          title="Write me a email"
+          href="mailto:"
+          class="w-full h-full py-3 text-base bg-primary btn"
+          type="button"
+          :body="emailBody"
+        >
+          Email
+        </Mailto>
 
-      <a
-        class="w-full py-3 text-base btn bg-primary"
-        :href="`tel:+${record.phone}`"
-        >Phone</a
-      >
+        <a
+          class="w-full py-3 text-base btn bg-primary"
+          :href="`tel:+${record.phone}`"
+          >Phone</a
+        >
+      </div>
 
       <button
         class="w-full py-3 text-white btn bg-accent"

@@ -7,7 +7,7 @@
           'I would like to eat with more ease',
           'For my career reasons',
           'For a special event',
-          'Another'
+          'Other'
         ]"
         :key="item"
         @click="

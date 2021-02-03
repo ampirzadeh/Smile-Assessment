@@ -43,10 +43,14 @@
           <input
             type="tel"
             class="block w-full text-gray-900 form-input rounded-xl"
+            autocomplete="tel"
             placeholder="Phone number"
             v-model="phone"
             required
           />
+          <small>
+            Please include country code
+          </small>
         </label>
       </form>
     </Question>
@@ -67,15 +71,28 @@ export default Vue.extend({
   },
   watch: {
     firstName() {
-      this.$emit('input', this.$data)
+      this.saveData()
     },
     lastName() {
-      this.$emit('input', this.$data)
+      this.saveData()
     },
     email() {
-      this.$emit('input', this.$data)
+      this.saveData()
     },
     phone() {
+      this.saveData()
+    }
+  },
+  methods: {
+    saveData() {
+      const phoneNumberRegEx = /^\+\d+$/
+      if (!!this.phone && !phoneNumberRegEx.test(this.phone.toString()))
+        return this.$emit('input', { ...this.$data, phone: '' })
+
+      const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      if (!!this.email && !emailRegEx.test(this.email.toLocaleLowerCase()))
+        return this.$emit('input', { ...this.$data, email: '' })
+
       this.$emit('input', this.$data)
     }
   }

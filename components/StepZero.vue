@@ -8,7 +8,7 @@
     <nuxt-link
       tag="button"
       :to="{ query: { step: (1).toString() } }"
-      class="flex justify-center py-3 align-middle bg-white border border-solid lg:w-1/2 border-accent text-accent btn hover:bg-gray-200 focus:shadow-outline focus:outline-none"
+      class="flex justify-center w-full py-3 align-middle bg-white border border-solid xl:w-1/2 border-accent text-accent btn hover:bg-gray-200 focus:shadow-outline focus:outline-none"
       type="button"
       aria-label="Start"
       title="Start"
