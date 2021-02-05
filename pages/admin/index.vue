@@ -1,39 +1,39 @@
 <template>
   <div class="min-h-screen p-10 bg-bgColor">
     <template v-if="records.length">
-      <!-- <div class="flex mb-6">
-      <label class="flex flex-col flex-1 max-w-screen-md mx-12 mr-auto">
-        Search email, first name, last name, or phone:
-        <input
-          @keyup.enter="
-            $router.push({
-              query: { ...$route.query, search: searchQuery }
-            })
-          "
-          type="text"
-          class="w-full form-input rounded-xl"
-          v-model="searchQuery"
-          id="search"
-          name="search"
-        />
-      </label>
+      <div class="flex mb-6">
+        <label class="flex flex-col flex-1 max-w-screen-md mx-12 mr-auto">
+          Search email, first name, last name, or phone:
+          <input
+            @keyup.enter="
+              $router.push({
+                query: { ...$route.query, search: searchQuery }
+              })
+            "
+            type="text"
+            class="w-full form-input rounded-xl"
+            v-model="searchQuery"
+            id="search"
+            name="search"
+          />
+        </label>
 
-      <label class="flex flex-col flex-1 mx-12"
-        >Items shown per page:
-        <input
-          @keyup.enter="
-            $router.push({
-              query: { ...$route.query, per_page: perPage.toString() }
-            })
-          "
-          type="number"
-          name="perpage"
-          id="perpage"
-          class="block w-full text-gray-900 form-input rounded-xl"
-          v-model="perPage"
-        />
-      </label>
-    </div> -->
+        <label class="flex flex-col flex-1 mx-12"
+          >Items shown per page:
+          <input
+            @keyup.enter="
+              $router.push({
+                query: { ...$route.query, per_page: perPage.toString() }
+              })
+            "
+            type="number"
+            name="perpage"
+            id="perpage"
+            class="block w-full text-gray-900 form-input rounded-xl"
+            v-model="perPage"
+          />
+        </label>
+      </div>
 
       <div class="flex flex-row gap-2">
         <RecordCard
@@ -43,7 +43,7 @@
         />
       </div>
 
-      <!-- <Pagination v-if="pagesCount > 1" :max="pagesCount" :per-page="perPage" /> -->
+      <Pagination v-if="pagesCount > 1" :max="pagesCount" :per-page="perPage" />
     </template>
   </div>
 </template>
