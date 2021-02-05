@@ -5,7 +5,7 @@ export type reasons =
   | 'I would like to eat with more ease'
   | 'For my career reasons'
   | 'For a special event'
-  | 'Another'
+  | 'Other'
 export type sufferings =
   | 'Sensitive teeth'
   | 'Bad breath'
@@ -39,12 +39,12 @@ export type StepOne = {
 }
 export type StepTwo = {
   [key: string]: any
-  sufferings: sufferings
+  sufferings: sufferings[]
   concerns?: string
 }
 export type StepThree = {
   [key: string]: any
-  reasons: reasons
+  reasons: reasons[]
   teethDislike: string
 }
 export type StepFour = {

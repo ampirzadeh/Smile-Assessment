@@ -5,7 +5,7 @@
         {{ record.firstName }} {{ record.lastName }}
       </h1>
 
-      <p>{{ titlize(record.gender) }}, {{ record.age }}</p>
+      <p>{{ formattedGender }}, {{ record.age }}</p>
     </header>
 
     <section>
@@ -17,17 +17,17 @@
 
       <p v-if="record.sufferings.length">
         <b class="font-semibold">Sufferings: </b>
-        {{ record.sufferings.join(', ') }}
+        {{ sufferings }}
       </p>
 
       <p v-if="record.treatments && record.treatments.length">
         <b class="font-semibold">Interested Treatments: </b>
-        {{ record.treatments.join(', ') }}
+        {{ treatments }}
       </p>
 
       <p v-if="record.reasons.length">
         <b class="font-semibold">Reason: </b>
-        {{ record.reasons.join(', ') }}
+        {{ reasons }}
       </p>
       <p v-if="record.teethDislike">
         <b class="font-semibold">Teeth Dislike: </b> {{ record.teethDislike }}
@@ -144,9 +144,6 @@ export default Vue.extend({
       this.$modal.show('imageOverlay')
       this.imageOverlayImageSource = imageSrc
     },
-    titlize(text: string): string {
-      return text.charAt(0).toLocaleUpperCase() + text.slice(1, text.length)
-    },
     answered() {
       this.$axios
         .$post(
@@ -167,6 +164,19 @@ export default Vue.extend({
     }
   },
   computed: {
+    formattedGender(): string {
+      const text = (this as any).record.gender
+      return text.charAt(0).toLocaleUpperCase() + text.slice(1, text.length)
+    },
+    sufferings() {
+      return (this as any).record.sufferings.join(', ')
+    },
+    treatments() {
+      return (this as any).record.treatments.join(', ')
+    },
+    reasons() {
+      return (this as any).record.reasons.join(', ')
+    },
     emailSubject: {
       get() {
         return (

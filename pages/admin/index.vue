@@ -1,6 +1,7 @@
 <template>
   <div class="min-h-screen p-10 bg-bgColor">
-    <div class="flex mb-6">
+    <template v-if="records.length">
+      <!-- <div class="flex mb-6">
       <label class="flex flex-col flex-1 max-w-screen-md mx-12 mr-auto">
         Search email, first name, last name, or phone:
         <input
@@ -32,46 +33,25 @@
           v-model="perPage"
         />
       </label>
-    </div>
+    </div> -->
 
-    <div class="flex flex-row gap-2">
-      <nuxt-link
-        :to="{ name: 'admin-id', params: { id: record._id } }"
-        v-for="record in records"
-        class="flex flex-col w-full p-6 text-sm transition-all duration-300 bg-white rounded-md shadow md:w-1/3 lg:w-1/4"
-        :key="record._id"
-      >
-        <h1 class="text-lg font-semibold font-montserrat">
-          {{ `${record.firstName} ${record.lastName}` }}
-        </h1>
-        <small class="text-opacity-75">
-          {{ titlize(record.gender) }}, {{ record.age }}
-        </small>
+      <div class="flex flex-row gap-2">
+        <RecordCard
+          v-for="record in records"
+          :key="record._id"
+          :record="record"
+        />
+      </div>
 
-        <p>
-          <b class="font-semibold">Sufferings:</b>
-          {{ record.sufferings.splice(0, 2).join(', ') }}
-        </p>
-
-        <p>
-          <b class="font-semibold">Reasons:</b>
-          {{ record.reasons.splice(0, 2).join(', ') }}
-        </p>
-
-        <p>
-          <b class="font-semibold">Concers: </b>
-          {{ record.concerns.slice(0, 100) }}
-        </p>
-      </nuxt-link>
-    </div>
-
-    <Pagination v-if="pagesCount > 1" :max="pagesCount" :per-page="perPage" />
+      <!-- <Pagination v-if="pagesCount > 1" :max="pagesCount" :per-page="perPage" /> -->
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { IRecord } from '~/api/db/Record'
+
 export default Vue.extend({
   middleware: 'locked',
   watch: {
@@ -89,7 +69,7 @@ export default Vue.extend({
       this.$router.replace({ query: { page: '1' } })
   },
   async fetch() {
-    const { records, recordsCount } = await this.$axios.$get('/api/records', {
+    const data = await this.$axios.$get('/api/records', {
       auth: {
         username: this.$store.state.username,
         password: this.$store.state.password
@@ -101,8 +81,8 @@ export default Vue.extend({
       }
     })
 
-    this.records = records
-    this.pagesCount = Math.ceil(recordsCount / this.perPage)
+    this.records = data.records
+    this.pagesCount = Math.ceil(data.recordsCount / this.perPage)
   },
   data() {
     return {
@@ -123,11 +103,6 @@ export default Vue.extend({
         'email',
         'images'
       ]
-    }
-  },
-  methods: {
-    titlize(text: string): string {
-      return text.charAt(0).toLocaleUpperCase() + text.slice(1, text.length)
     }
   }
 })

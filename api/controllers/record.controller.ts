@@ -44,9 +44,9 @@ export const newRecord: Handler = async (req, res) => {
       phone,
       concerns,
       smileRate,
-      sufferings: sufferings.split(','),
-      reasons: reasons.split(','),
-      treatments: treatments.split(','),
+      sufferings: ((sufferings as unknown) as string).split(','),
+      reasons: ((reasons as unknown) as string).split(','),
+      treatments: ((treatments as unknown) as string).split(','),
       teethDislike
     })
     res.json({
