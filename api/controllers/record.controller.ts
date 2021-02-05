@@ -100,38 +100,26 @@ const AllRecords: Handler = async (req, res) => {
 }
 
 const OneRecord: Handler = async (req, res, next) => {
-  const record = await Record.findById(req.query.id)
-  const objects: string[] = req.body.objects
+  try {
+    const record = await Record.findById(req.query.id)
 
-  return Promise.all(
-    objects.length === 1
-      ? [getS3Object(objects[0])]
-      : objects.length === 2
-      ? [getS3Object(objects[0]), getS3Object(objects[1])]
-      : objects.length === 3
-      ? [
-          getS3Object(objects[0]),
-          getS3Object(objects[1]),
-          getS3Object(objects[2])
-        ]
-      : objects.length === 4
-      ? [
-          getS3Object(objects[0]),
-          getS3Object(objects[1]),
-          getS3Object(objects[2]),
-          getS3Object(objects[3])
-        ]
-      : []
-  )
-    .then(images => {
-      res.json({
-        images,
-        record
-      })
+    res.json({
+      record
     })
-    .catch(res => {
-      console.log(`Error Getting Templates: ${res}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const OneImage: Handler = async (req, res, next) => {
+  try {
+    getS3Object(req.params.key).then(d => {
+      res.json({ d })
     })
+  } catch (error) {
+    console.log(error)
+    res.send(error)
+  }
 }
 
 const recordController: Handler = async (req, res, next) => {

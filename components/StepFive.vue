@@ -50,6 +50,10 @@
 import Vue from 'vue'
 import ImageIcon from '~/assets/icons/image-open.svg?inline'
 
+import ImageBlobReduce from 'image-blob-reduce'
+
+const reduce = ImageBlobReduce()
+
 export default Vue.extend({
   name: 'StepFive',
   components: {
@@ -81,6 +85,17 @@ export default Vue.extend({
   },
   watch: {
     showImages() {
+      this.images.map(image =>
+        reduce
+          .toBlob(image, {
+            max: 200,
+            unsharpAmount: 80,
+            unsharpRadius: 0.6,
+            unsharpThreshold: 2
+          })
+          .then((res: Blob) => (image = res))
+      )
+
       this.$emit('input', { images: this.images })
     }
   }

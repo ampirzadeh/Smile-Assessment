@@ -53,7 +53,10 @@
 
     <section class="my-6">
       <h2>Images:</h2>
-      <div class="flex h-32 gap-3 overflow-x-auto overflow-y-hidden">
+      <transition-group
+        name="fade"
+        class="flex h-32 gap-3 overflow-x-auto overflow-y-hidden"
+      >
         <img
           class="object-cover h-full rounded-md cursor-pointer"
           alt="Picture"
@@ -62,7 +65,7 @@
           :src="image"
           @click="openOverlay(image)"
         />
-      </div>
+      </transition-group>
     </section>
 
     <footer>
@@ -121,6 +124,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { AxiosResponse } from 'axios'
 
 export default Vue.extend({
   middleware: 'locked',
@@ -136,7 +140,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      imageOverlayImageSource: ''
+      imageOverlayImageSource: '',
+      images: [] as any[]
     }
   },
   methods: {
@@ -162,6 +167,20 @@ export default Vue.extend({
           this.$router.push('/admin')
         })
     }
+  },
+  mounted() {
+    const images = (this as any).record.images
+
+    images.map((image: string, index: number) => {
+      this.$axios
+        .$get(`/api/image/${image}`, {
+          auth: {
+            username: this.$store.state.username,
+            password: this.$store.state.password
+          }
+        })
+        .then(res => this.images.push(res.d))
+    })
   },
   computed: {
     formattedGender(): string {
@@ -200,3 +219,14 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style>
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>
