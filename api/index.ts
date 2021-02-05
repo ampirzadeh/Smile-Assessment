@@ -2,12 +2,18 @@ require('dotenv')
 import express from 'express'
 import connectToDb from './db/connect'
 import helmet from 'helmet'
+import cors from 'cors'
 import router from './router'
 
 const app = express()
 
 app.use(express.json())
 app.use(helmet())
+app.use(
+  cors({
+    origin: 'http://localhost:3000'
+  })
+)
 
 connectToDb()
 
