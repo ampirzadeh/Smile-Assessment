@@ -1,6 +1,6 @@
 <template>
   <fieldset class="flex flex-col transition-all duration-200 align-center">
-    <p class="max-w-sm my-16 text-justify">
+    <p class="my-16 text-justify">
       Make your smile much more beautiful, show us your smile and get back our
       professional dentists' feedback.
     </p>

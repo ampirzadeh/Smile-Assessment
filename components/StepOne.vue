@@ -51,7 +51,7 @@ export default Vue.extend({
     return {
       gender: '',
       age: '',
-      smileRate: 5
+      smileRate: 0
     }
   },
   watch: {
