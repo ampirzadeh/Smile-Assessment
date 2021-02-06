@@ -53,6 +53,9 @@ import Vue from 'vue'
 import { IRecord } from '~/api/db/Record'
 
 export default Vue.extend({
+  head: {
+    title: "Admin Panel"
+  },
   middleware: 'locked',
   watch: {
     '$route.query'() {

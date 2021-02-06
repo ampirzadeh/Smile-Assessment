@@ -2,7 +2,7 @@
   <div class="container flex flex-col p-4 mx-auto mt-10">
     <header>
       <h1 class="text-2xl font-semibold font-montserrat">
-        {{ record.firstName }} {{ record.lastName }}
+        {{ fullName }}
       </h1>
 
       <p>{{ formattedGender }}, {{ record.age }}</p>
@@ -127,6 +127,9 @@ import Vue from 'vue'
 import { AxiosResponse } from 'axios'
 
 export default Vue.extend({
+  head() {
+    return { title: (this as any).fullName }
+  },
   middleware: 'locked',
   async asyncData({ $axios, params, store }) {
     const record = await $axios.$get(`/api/records`, {
@@ -195,6 +198,11 @@ export default Vue.extend({
     },
     reasons() {
       return (this as any).record.reasons.join(', ')
+    },
+    fullName() {
+      return `${(this as any).record.firstName}  ${
+        (this as any).record.lastName
+      }`
     },
     emailSubject: {
       get() {
