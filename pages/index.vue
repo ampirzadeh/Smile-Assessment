@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="md:flex">
-      <section class="w-full max-w-screen-md px-2 mx-auto mt-10 text-white rounded-lg sm:px-10 md:px-24 ">
+      <section
+        class="w-full max-w-screen-md px-2 mx-auto mt-10 text-white rounded-lg sm:px-10 md:px-24 "
+      >
         <h1
           :class="step ? 'text-2xl' : 'text-3xl'"
           class="transition-all duration-200 delay-200"
@@ -49,7 +51,7 @@
 
         <nuxt-link
           tag="button"
-          class="flex justify-center w-full pl-6 align-middle bg-white border border-solid border-accent text-accent btn hover:bg-gray-200 focus:shadow-outline focus:outline-none"
+          class="flex justify-center w-full pl-6 align-middle bg-white border border-solid border-accent text-textAccent btn hover:bg-gray-200 focus:shadow-outline focus:outline-none"
           aria-label="next"
           title="Next"
           v-if="step !== 6"
@@ -215,17 +217,7 @@ export default Vue.extend({
           })
           break
         case 5:
-          requiredFields = ['images']
-          requiredFields.map(field => {
-            if (
-              !(
-                this.stepFive.hasOwnProperty(field) &&
-                this.stepFive[field]?.length
-              )
-            ) {
-              isValid = false
-            }
-          })
+          isValid = true
           break
         case 6:
           requiredFields = ['firstName', 'lastName', 'email', 'phone']

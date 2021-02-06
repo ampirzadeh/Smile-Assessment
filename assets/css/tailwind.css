@@ -39,7 +39,7 @@
     /* &:focus,
     &:hover,
     &:active {
-      @apply bg-gray-400 text-accent;
+      @apply bg-gray-400 text-textAccent;
     } */
   }
 }

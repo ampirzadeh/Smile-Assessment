@@ -40,9 +40,10 @@ module.exports = {
       }
     },
     colors: {
-      primary: '#1ea0ae',
+      primary: '#188490',
       bgColor: '#7DD7E5',
       accent: '#BF9B30',
+      textAccent: '#7a631f',
       circleBorder: '#7070704D',
       circleBackground: '#F6F6F6',
       circleTextColor: '#A5A5A5',

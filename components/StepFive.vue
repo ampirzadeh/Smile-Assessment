@@ -1,45 +1,23 @@
 <template>
   <QuestionsContainer>
     <Question title="Upload your photos:">
-      <p>Use sample photos and upload one photo for each sample</p>
-      <div class="flex flex-col max-w-full mx-auto mt-4 md:flex-row">
-        <div class="hidden w-1/2 h-full mb-6 md:block">
-          <ImageDropZone :value="showImages" @input="updateshowImages" />
-        </div>
-        <div class="w-full mx-auto mb-6 md:hidden md:mx-0">
-          <input
-            :disabled="showImages.length >= 4"
-            multiple
-            @input="updateshowImages($event.target.files)"
-            type="file"
-            accept="image/*"
-          />
-        </div>
+      <p class="mt-0">Use sample photos and upload one photo for each sample</p>
 
+      <div
+        class="relative flex flex-wrap items-center justify-around w-full gap-3 mt-4"
+      >
         <div
-          class="container flex flex-col flex-wrap items-start justify-around gap-1 px-0 mx-auto overflow-x-hidden overflow-y-auto md:max-w-screen-sm md:flex-row md:px-6 md:w-1/2"
+          v-for="(image, index) in images"
+          :key="`image-${index}-${keys[index]}`"
+          class="w-full sm:w-5/12"
         >
-          <div
-            class="relative w-full my-1 shadow-md sm:flex-initial rounded-3xl md:w-5/12"
-            v-for="(image, index) in showImages.length
-              ? showImages
-              : ['front-photo', 'smile', 'left-smile', 'right-smile']"
-            :key="image"
+          <img class="object-cover w-full h-full rounded-md" :src="image" />
+          <button
+            class="w-full mx-0 btn bg-accent"
+            @click="replaceImage(index)"
           >
-            <img
-              class="object-cover w-full h-full bg-center rounded-md md:h-20 lg:h-32"
-              alt="Image"
-              :src="showImages.length ? image : `/images/samples/${image}.png`"
-            />
-            <button
-              class="absolute bottom-0 right-0 py-1 m-2 text-sm font-semibold bg-white shadow-lg text-red btn"
-              title="Remove Image"
-              @click="removeImage(index)"
-              v-if="showImages.length"
-            >
-              Delete
-            </button>
-          </div>
+            Upload this photo
+          </button>
         </div>
       </div>
     </Question>
@@ -61,31 +39,44 @@ export default Vue.extend({
   },
   data() {
     return {
-      showImages: [] as string[],
-      images: [] as Blob[]
+      images: [
+        '/images/samples/front-photo.png',
+        '/images/samples/smile.png',
+        '/images/samples/right-smile.png'
+      ] as string[],
+      keys: ([] as number[]).fill.call({ length: 3 }, 1) as number[],
+      imageBlobs: [] as Blob[]
     }
   },
   methods: {
-    updateshowImages(files: FileList) {
-      for (let filesCounter = 0; filesCounter < files.length; filesCounter++) {
-        const file = files.item(filesCounter)
-        if (file && file.type.includes('image/')) {
-          this.showImages.push(URL.createObjectURL(file))
-          this.images.push(file)
+    replaceImage(index: number): void {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'image/*'
+      input.onchange = e => {
+        if (input.files?.length) {
+          this.images[index] = URL.createObjectURL(input.files[0])
+          this.imageBlobs[index] = input.files[0]
+
+          this.saveData()
+
+          this.keys[index] += 1
+
+          input.remove()
         }
       }
-      if (this.showImages.length > 4)
-        this.showImages = this.showImages.slice(0, 4)
-      if (this.images.length > 4) this.images = this.images.slice(0, 4)
+
+      input.click()
     },
     removeImage(index: number) {
-      this.showImages.splice(index, 1)
       this.images.splice(index, 1)
-    }
-  },
-  watch: {
-    showImages() {
-      this.images.map(image =>
+      this.imageBlobs.splice(index, 1)
+      this.saveData()
+    },
+    saveData() {
+      const reducedSizeImages: Blob[] = []
+
+      this.imageBlobs.map(image =>
         reduce
           .toBlob(image, {
             max: 200,
@@ -93,10 +84,9 @@ export default Vue.extend({
             unsharpRadius: 0.6,
             unsharpThreshold: 2
           })
-          .then((res: Blob) => (image = res))
+          .then((res: Blob) => reducedSizeImages.push(res))
       )
-
-      this.$emit('input', { images: this.images })
+      this.$emit('input', { images: reducedSizeImages })
     }
   }
 })

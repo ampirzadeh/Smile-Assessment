@@ -12,11 +12,19 @@ const config: NuxtConfig = {
     bodyAttrs: {
       class: process.env.NODE_ENV === 'development' ? 'debug-screens' : ''
     },
+    htmlAttrs: {
+      lang: 'en'
+    },
     titleTemplate: '%s - Smile Assessment',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          "Make your smile much more beautiful, show us your smile and get back our professional dentists' feedback."
+      }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
