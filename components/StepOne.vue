@@ -30,17 +30,14 @@
     </Question>
 
     <Question title="Rate your smile">
-      <label class="inline-flex items-center">
-        <input
-          v-model="smileRate"
-          type="range"
-          name="smileRate"
-          id="smileRate"
-          min="1"
-          max="10"
-        />
-        <span class="ml-2">{{ smileRate }}</span>
-      </label>
+      <Option
+        v-for="i in 10"
+        :key="i"
+        @click="smileRate = i"
+        :active="smileRate === i"
+      >
+        {{ i }}
+      </Option>
     </Question>
   </QuestionsContainer>
 </template>
