@@ -37,13 +37,10 @@ module.exports = {
           "'Helvetica Neue'",
           'sans-serif'
         ]
-      },
-      backgroundImage: theme => ({
-        bgImage: "url('/images/background.png')"
-      })
+      }
     },
     colors: {
-      primary: '#24C1D273',
+      primary: '#1ea0ae',
       bgColor: '#7DD7E5',
       accent: '#BF9B30',
       circleBorder: '#7070704D',

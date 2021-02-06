@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-right-top bg-no-repeat bg-bgColor lg:bg-bgImage">
+  <div>
     <div class="md:flex">
-      <section class="px-2 py-16 text-white md:px-24 xl:w-8/12">
+      <section class="w-full max-w-screen-md px-2 mx-auto mt-10 text-white rounded-lg sm:px-10 md:px-24 ">
         <h1
           :class="step ? 'text-2xl' : 'text-3xl'"
           class="transition-all duration-200 delay-200"
@@ -35,7 +35,7 @@
       </section>
     </div>
 
-    <div class="flex" v-if="step !== 0">
+    <div class="flex my-10" v-if="step !== 0">
       <div class="flex w-10/12 ml-auto mr-10 md:w-4/12">
         <nuxt-link
           class="flex justify-center w-full text-white align-middle transition-all duration-300 bg-transparent btn hover:bg-white hover:text-white hover:opacity-100 hover:bg-opacity-25 focus:shadow-outline focus:outline-none"

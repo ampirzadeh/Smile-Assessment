@@ -48,9 +48,6 @@
             v-model="phone"
             required
           />
-          <small>
-            Please include country code
-          </small>
         </label>
       </form>
     </Question>
@@ -85,7 +82,7 @@ export default Vue.extend({
   },
   methods: {
     saveData() {
-      const phoneNumberRegEx = /^\+\d+$/
+      const phoneNumberRegEx = /^\d+$/
       if (!!this.phone && !phoneNumberRegEx.test(this.phone.toString()))
         return this.$emit('input', { ...this.$data, phone: '' })
 

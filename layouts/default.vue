@@ -11,7 +11,7 @@
       <StepCircles v-if="!!step" :step="step" :max-step="maxStep" />
     </header>
 
-    <main>
+    <main class="min-h-screen bg-primary">
       <nuxt />
     </main>
   </div>
