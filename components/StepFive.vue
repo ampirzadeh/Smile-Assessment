@@ -13,7 +13,7 @@
         >
           <img class="object-cover w-full h-full rounded-md" :src="image" />
           <button
-            class="w-full mx-0 btn bg-accent"
+            class="w-full mx-0 outline-none btn bg-accent focus:shadow-outline hover:shadow-outline focus:outline-none"
             @click="replaceImage(index)"
           >
             Upload this photo
@@ -53,6 +53,8 @@ export default Vue.extend({
       const input = document.createElement('input')
       input.type = 'file'
       input.accept = 'image/*'
+      input.style.display = 'none'
+
       input.onchange = e => {
         if (input.files?.length) {
           this.images[index] = URL.createObjectURL(input.files[0])

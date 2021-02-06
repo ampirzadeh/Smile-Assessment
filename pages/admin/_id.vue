@@ -166,7 +166,7 @@ export default Vue.extend({
             }
           }
         )
-        .then(res => {
+        .then(() => {
           this.$router.push('/admin')
         })
     }
@@ -182,7 +182,7 @@ export default Vue.extend({
             password: this.$store.state.password
           }
         })
-        .then(res => this.images.push(res.d))
+        .then((res: { d: any }) => this.images.push(res.d))
     })
   },
   computed: {

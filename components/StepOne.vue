@@ -1,10 +1,10 @@
 <template>
   <QuestionsContainer>
     <Question title="What is your gender?">
-      <Option @click="gender = 'male'" :active="gender === 'male'">
+      <Option class="flex-initial w-full sm:w-5/12" @click="gender = 'male'" :active="gender === 'male'">
         Male
       </Option>
-      <Option @click="gender = 'female'" :active="gender === 'female'">
+      <Option class="flex-initial w-full sm:w-5/12" @click="gender = 'female'" :active="gender === 'female'">
         Female
       </Option>
     </Question>
