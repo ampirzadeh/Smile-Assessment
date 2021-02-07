@@ -43,6 +43,7 @@
       height="auto"
       :scrollable="true"
       name="imageOverlay"
+      :adaptive="true"
     >
       <img
         :src="imageOverlayImageSource"
@@ -58,7 +59,7 @@
         class="flex h-32 gap-3 overflow-x-auto overflow-y-hidden"
       >
         <img
-          class="object-cover h-full rounded-md cursor-pointer"
+          class="object-cover w-2/3 h-full rounded-md cursor-pointer"
           alt="Picture"
           v-for="image in images"
           :key="image"
@@ -124,7 +125,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { AxiosResponse } from 'axios'
 
 export default Vue.extend({
   transition: 'fade',

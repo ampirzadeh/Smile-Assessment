@@ -1,8 +1,8 @@
 <template>
-  <div class="flex w-screen min-h-screen mx-auto">
+  <div class="container flex w-screen min-h-screen mx-auto">
     <form
       @submit.prevent="login"
-      class="flex flex-col justify-between px-16 py-10 m-auto mt-10 bg-white rounded-md shadow-lg h-80"
+      class="flex flex-col justify-between px-6 py-10 m-auto mt-10 bg-white rounded-md shadow-lg md:px-16 h-80"
     >
       <label class="flex flex-col" for="username">
         Username

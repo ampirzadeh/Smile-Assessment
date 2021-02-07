@@ -39,18 +39,19 @@
             $route.query.show_answered === 'true' ? 'false' : 'true'
         }
       }"
-      class="w-full mt-5 text-white bg-transparent btn"
+      class="flex w-full mt-6 text-white bg-transparent btn"
       role="button"
     >
-      <span class="ml-2">{{
-        $route.query.show_answered ? 'Answered' : 'Not Answered'
+      <RefreshIcon class="mx-auto" />
+      <span class="mr-auto">{{
+        $route.query.show_answered === 'true' ? 'Answered' : 'Not Answered'
       }}</span>
     </nuxt-link>
 
     <template v-if="records.length">
       <transition-group
         name="fade-no-leave"
-        class="flex flex-row flex-wrap gap-2 my-6"
+        class="flex flex-row flex-wrap gap-2 mb-6"
       >
         <RecordCard
           v-for="record in records"
@@ -67,8 +68,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import { IRecord } from '~/api/db/Record'
+import RefreshIcon from '~/assets/icons/refresh-cw.svg?inline'
 
 export default Vue.extend({
+  components: {
+    RefreshIcon
+  },
   transition: 'fade',
   head: {
     title: 'Admin Panel'
