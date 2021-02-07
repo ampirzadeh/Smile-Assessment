@@ -9,11 +9,7 @@ const app = express()
 
 app.use(express.json())
 app.use(helmet())
-app.use(
-  cors({
-    origin: 'null'
-  })
-)
+app.use(cors())
 
 connectToDb()
 

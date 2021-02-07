@@ -39,11 +39,11 @@
             $route.query.show_answered === 'true' ? 'false' : 'true'
         }
       }"
-      class="flex w-full mt-6 text-white bg-transparent btn"
+      class="flex justify-center w-full mt-6 text-white bg-transparent btn"
       role="button"
     >
-      <RefreshIcon class="mx-auto" />
-      <span class="mr-auto">{{
+      <RefreshIcon class="mx-3" />
+      <span>{{
         $route.query.show_answered === 'true' ? 'Answered' : 'Not Answered'
       }}</span>
     </nuxt-link>

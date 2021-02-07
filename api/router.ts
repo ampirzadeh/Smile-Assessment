@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getS3Object, upload } from './aws'
+import { upload } from './aws'
 import locked from './locked'
 import recordController, { newRecord, OneImage } from './controllers/record.controller'
 import { answer } from './controllers/answered.controller'

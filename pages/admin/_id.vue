@@ -59,7 +59,7 @@
         class="flex h-32 gap-3 overflow-x-auto overflow-y-hidden"
       >
         <img
-          class="object-cover w-2/3 h-full rounded-md cursor-pointer"
+          class="object-cover w-2/3 h-full rounded-md cursor-pointer md:w-auto"
           alt="Picture"
           v-for="image in images"
           :key="image"
