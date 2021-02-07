@@ -12,7 +12,7 @@
           <span class="hidden">First Name</span>
           <input
             type="text"
-            class="block w-full text-gray-900 form-input rounded-xl"
+            class="block w-full text-black form-input rounded-xl"
             placeholder="First Name"
             v-model="firstName"
             required
@@ -22,7 +22,7 @@
           <span class="hidden">Last Name</span>
           <input
             type="text"
-            class="block w-full text-gray-900 form-input rounded-xl"
+            class="block w-full text-black form-input rounded-xl"
             placeholder="Last Name"
             v-model="lastName"
             required
@@ -32,7 +32,7 @@
           <span class="hidden">E-mail address</span>
           <input
             type="email"
-            class="block w-full text-gray-900 form-input rounded-xl"
+            class="block w-full text-black form-input rounded-xl"
             placeholder="E-mail"
             v-model="email"
             required
@@ -42,7 +42,7 @@
           <span class="hidden">Phone number</span>
           <input
             type="tel"
-            class="block w-full text-gray-900 form-input rounded-xl"
+            class="block w-full text-black form-input rounded-xl"
             autocomplete="tel"
             placeholder="Phone number"
             v-model="phone"

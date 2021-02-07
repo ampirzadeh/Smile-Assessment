@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex flex-col p-4 mx-auto mt-10">
+  <div class="container flex flex-col p-4 mx-auto mt-10 text-white">
     <header>
       <h1 class="text-2xl font-semibold font-montserrat">
         {{ fullName }}
@@ -51,10 +51,10 @@
       />
     </modal>
 
-    <section class="my-6">
+    <section class="my-6" v-if="record.images.length">
       <h2>Images:</h2>
       <transition-group
-        name="fade"
+        name="grow"
         class="flex h-32 gap-3 overflow-x-auto overflow-y-hidden"
       >
         <img
@@ -73,7 +73,7 @@
         Email Subject:
         <input
           v-model="emailSubject"
-          class="form-input"
+          class="text-black form-input"
           type="text"
           name="subject"
           id="subject"
@@ -84,20 +84,20 @@
         Email Body:
         <input
           v-model="emailBody"
-          class="form-input"
+          class="text-black form-input"
           type="text"
           name="body"
           id="body"
         />
       </label>
 
-      <div class="md:flex">
+      <div class="text-black md:flex">
         <Mailto
           :mail="record.email"
           :subject="emailSubject"
           title="Write me a email"
           href="mailto:"
-          class="w-full h-full py-3 text-base bg-primary btn"
+          class="w-full h-full py-3 text-base bg-bgColor btn"
           type="button"
           :body="emailBody"
         >
@@ -105,7 +105,7 @@
         </Mailto>
 
         <a
-          class="w-full py-3 text-base btn bg-primary"
+          class="w-full py-3 text-base btn bg-bgColor"
           :href="`tel:+${record.phone}`"
           >Phone</a
         >
@@ -127,6 +127,7 @@ import Vue from 'vue'
 import { AxiosResponse } from 'axios'
 
 export default Vue.extend({
+  transition: 'fade',
   head() {
     return { title: (this as any).fullName }
   },
@@ -227,14 +228,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style>
-.component-fade-enter-active,
-.component-fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.component-fade-enter, .component-fade-leave-to
-/* .component-fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-</style>

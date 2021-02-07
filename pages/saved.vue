@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-bgColor">
+  <div class="flex items-center justify-center min-h-screen bg-primary">
     <div
       class="max-w-screen-md p-5 mx-6 mt-24 transform -translate-y-1/2 bg-white border border-gray-400 border-solid shadow-md rounded-xl md:mx-2"
     >
@@ -10,9 +10,21 @@
         to you for further consultation and your tailored treatment plans and
         costs.
       </p>
-      <nuxt-link tag="button" :to="{name: 'index'}" class="w-full mt-6 text-white rounded-full hover:opacity-75 focus:opacity-75 btn bg-accent" title="Start Again">
-        Start Over 
+      <nuxt-link
+        tag="button"
+        :to="{ name: 'index' }"
+        class="w-full mt-6 text-white rounded-full hover:opacity-75 focus:opacity-75 btn bg-accent"
+        title="Start Again"
+      >
+        Start Over
       </nuxt-link>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
+  transition: 'fade'
+})
+</script>

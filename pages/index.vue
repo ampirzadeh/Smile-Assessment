@@ -95,6 +95,7 @@ import {
 } from '../@types'
 
 export default Vue.extend({
+  transition: 'fade',
   head: {
     title: 'Smile Assesment Form'
   },
@@ -241,17 +242,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style>
-.fade-enter-active {
-  transition: opacity 0.2s;
-}
-.fade-leave-active {
-  transition: none;
-  transition-duration: 0ms;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

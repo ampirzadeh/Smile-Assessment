@@ -35,3 +35,39 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style>
+.grow-enter-active,
+.grow-leave-active {
+  transition: all 0.3s;
+}
+.grow-enter,
+.grow-leave-to {
+  opacity: 0;
+  width: 0px;
+  height: 0px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+
+.fade-no-leave-leave-active {
+  transition: none;
+  transition-duration: 0ms;
+}
+
+.fade-no-leave-enter-active {
+  transition: opacity 0.3s;
+}
+.fade-no-leave-enter,
+.fade-no-leave-leave-to {
+  opacity: 0;
+}
+</style>

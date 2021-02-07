@@ -8,7 +8,13 @@ import {
   StepSix
 } from '~/@types'
 
-export interface Record extends StepOne, StepTwo, StepThree, StepFour, StepFive, StepSix {
+export interface Record
+  extends StepOne,
+    StepTwo,
+    StepThree,
+    StepFour,
+    StepFive,
+    StepSix {
   hasBeenAnsweredTo: boolean
 }
 // {
@@ -92,6 +98,13 @@ const RecordSchema = new Schema(
   },
   { timestamps: true, versionKey: false }
 )
+
+RecordSchema.index({
+  firstName: 'text',
+  lastName: 'text',
+  email: 'text',
+  phone: 'text'
+})
 
 const Record = mongoose.model<IRecord>('Record', RecordSchema)
 

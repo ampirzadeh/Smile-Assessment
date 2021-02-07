@@ -62,21 +62,16 @@ export const newRecord: Handler = async (req, res) => {
 
 const AllRecords: Handler = async (req, res) => {
   try {
-    const search = new RegExp(`^.*[${req.query.search}][a-bA-B]*.*$`, 'g')
+    const dbQuery: { [key: string]: any } | any = {}
+    if (req.query.search)
+      dbQuery['$text'] = {
+        $search: req.query.search.toString(),
+        $caseSensitive: false
+      }
 
-    const records = await Record.find(
-      req.query.search
-        ? {
-            hasBeenAnsweredTo: false,
-            $or: [
-              { firstName: search },
-              { lastName: search },
-              { email: search },
-              { phone: search }
-            ]
-          }
-        : { hasBeenAnsweredTo: false }
-    )
+    dbQuery.hasBeenAnsweredTo = req.query.show_answered === 'true'
+
+    const records = await Record.find(dbQuery)
       .skip(
         (parseInt(req.query.page as string) - 1) *
           parseInt(req.query.per_page as string)
@@ -84,9 +79,7 @@ const AllRecords: Handler = async (req, res) => {
       .limit(parseInt(req.query.per_page as string) || 10)
       .sort('-createdAt')
 
-    const recordsCount = await Record.countDocuments({
-      hasBeenAnsweredTo: false
-    })
+    const recordsCount = await Record.countDocuments(dbQuery)
 
     res.json({
       records,

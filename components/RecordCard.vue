@@ -9,17 +9,17 @@
     </h1>
     <small class="text-opacity-75"> {{ gender }}, {{ record.age }} </small>
 
-    <p>
+    <p v-if="sufferings.length">
       <b class="font-semibold">Sufferings:</b>
       {{ sufferings }}
     </p>
 
-    <p>
+    <p v-if="reasons.length">
       <b class="font-semibold">Reasons:</b>
       {{ reasons }}
     </p>
 
-    <p>
+    <p v-if="concerns.length">
       <b class="font-semibold">Concers: </b>
       {{ concerns }}
     </p>

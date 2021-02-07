@@ -27,7 +27,7 @@
     <Question title="What are your other concerns?">
       <label class="w-full">
         <textarea
-          class="block w-full mt-1 text-gray-900 resize-none rounded-xl form-textarea"
+          class="block w-full mt-1 text-black resize-none rounded-xl form-textarea"
           v-model="concerns"
           rows="5"
           placeholder="Please describe"
