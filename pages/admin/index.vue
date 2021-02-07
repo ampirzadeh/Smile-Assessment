@@ -1,31 +1,13 @@
 <template>
-  <div class="min-h-screen p-10 bg-primary">
+  <div class="min-h-screen px-2 py-10 md:px-10 bg-primary">
     <form
-      @submit.prevent="
-        $router.push({
-          ...$route.query,
-          search: searchQuery,
-          per_page: perPage.toString(),
-          page: '1'
-        })
-      "
-      class="flex flex-wrap"
+      @submit.prevent="updateQuery"
+      class="flex flex-col items-end justify-between gap-2 px-3 md:flex-row"
     >
-      <label
-        class="flex flex-col flex-1 max-w-screen-md mx-12 mr-auto text-white"
-      >
+      <label class="flex flex-col w-full mr-auto text-white">
         Search email, first name, last name, or phone:
         <input
-          @keyup.enter="
-            $router.push({
-              query: {
-                ...$route.query,
-                search: searchQuery,
-                per_page: perPage.toString(),
-                page: '1'
-              }
-            })
-          "
+          @keyup.enter="updateQuery"
           type="text"
           class="w-full text-black form-input rounded-xl"
           v-model="searchQuery"
@@ -34,19 +16,10 @@
         />
       </label>
 
-      <label class="flex flex-col flex-1 mx-12 text-white"
+      <label class="flex flex-col w-full text-white"
         >Items shown per page:
         <input
-          @keyup.enter="
-            $router.push({
-              query: {
-                ...$route.query,
-                search: searchQuery,
-                per_page: perPage.toString(),
-                page: '1'
-              }
-            })
-          "
+          @keyup.enter="updateQuery"
           type="number"
           name="perpage"
           id="perpage"
@@ -54,23 +27,31 @@
           v-model="perPage"
         />
       </label>
-
-      <label
-        class="flex items-center justify-center w-full mx-auto mt-5 text-white"
-      >
-        <input
-          v-model="showAnswered"
-          @change="updateQuery"
-          name="answered"
-          type="checkbox"
-          class="form-checkbox"
-        />
-        <span class="ml-2">Show Answered</span>
-      </label>
     </form>
 
+    <nuxt-link
+      :to="{
+        query: {
+          search: searchQuery,
+          per_page: perPage.toString(),
+          page: '1',
+          show_answered:
+            $route.query.show_answered === 'true' ? 'false' : 'true'
+        }
+      }"
+      class="w-full mt-5 text-white bg-transparent btn"
+      role="button"
+    >
+      <span class="ml-2">{{
+        $route.query.show_answered ? 'Answered' : 'Not Answered'
+      }}</span>
+    </nuxt-link>
+
     <template v-if="records.length">
-      <transition-group name="fade-no-leave" class="flex flex-row gap-2 my-6">
+      <transition-group
+        name="fade-no-leave"
+        class="flex flex-row flex-wrap gap-2 my-6"
+      >
         <RecordCard
           v-for="record in records"
           :key="record._id"
@@ -106,7 +87,7 @@ export default Vue.extend({
           search: this.searchQuery,
           per_page: this.perPage.toString(),
           page: '1',
-          show_answered: this.showAnswered.toString()
+          show_answered: this.$route.query.show_answered
         }
       })
     }
@@ -132,7 +113,7 @@ export default Vue.extend({
         page: this.$route.query.page || 1,
         per_page: this.$route.query.per_page || 10,
         search: this.searchQuery || undefined,
-        show_answered: this.showAnswered || false
+        show_answered: this.$route.query.show_answered
       }
     })
 
@@ -144,8 +125,7 @@ export default Vue.extend({
       records: [] as IRecord[],
       perPage: parseInt(this.$route.query.per_page as string) || 10,
       pagesCount: 0,
-      searchQuery: this.$route.query.search || '',
-      showAnswered: this.$route.query.show_answered === 'true'
+      searchQuery: this.$route.query.search || ''
     }
   }
 })

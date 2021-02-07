@@ -2,7 +2,7 @@
   <nuxt-link
     :to="{ name: 'admin-id', params: { id: record._id } }"
     prefetch
-    class="flex flex-col w-full p-6 text-sm transition-all duration-300 bg-white rounded-md shadow md:w-1/3 lg:w-1/4"
+    class="flex flex-col w-full p-6 text-sm transition-all duration-300 bg-white rounded-md shadow md:w-1/3"
   >
     <h1 class="text-lg font-semibold font-montserrat">
       {{ fullName }}
