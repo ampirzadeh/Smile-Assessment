@@ -1,10 +1,10 @@
 <template>
   <QuestionsContainer>
     <Question title="What is your gender?">
-      <Option class="flex-initial w-full sm:w-5/12" @click="gender = 'male'" :active="gender === 'male'">
+      <Option class="flex-initial w-5/12" @click="gender = 'male'" :active="gender === 'male'">
         Male
       </Option>
-      <Option class="flex-initial w-full sm:w-5/12" @click="gender = 'female'" :active="gender === 'female'">
+      <Option class="flex-initial w-5/12" @click="gender = 'female'" :active="gender === 'female'">
         Female
       </Option>
     </Question>
@@ -33,6 +33,7 @@
       <Option
         v-for="i in 10"
         :key="i"
+        class="flex-initial w-5/12 sm:w-1/6 md:flex-1"
         @click="smileRate = i"
         :active="smileRate === i"
       >

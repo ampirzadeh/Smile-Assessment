@@ -6,19 +6,25 @@
       <div
         class="relative flex flex-wrap items-center justify-around w-full gap-3 mt-4"
       >
-        <div
+        <label
           v-for="(image, index) in images"
           :key="`image-${index}-${keys[index]}`"
           class="w-full sm:w-5/12"
         >
           <img class="object-cover w-full h-full rounded-md" :src="image" />
-          <button
+          <input
+            accept="image/*"
+            class="absolute w-0 h-0 opacity-0"
+            type="file"
+            @change="replaceImage($event, index)"
+          />
+          <span
+            role="button"
             class="w-full mx-0 outline-none btn bg-accent focus:shadow-outline hover:shadow-outline focus:outline-none"
-            @click="replaceImage(index)"
           >
             Upload this photo
-          </button>
-        </div>
+          </span>
+        </label>
       </div>
     </Question>
   </QuestionsContainer>
@@ -49,26 +55,18 @@ export default Vue.extend({
     }
   },
   methods: {
-    replaceImage(index: number): void {
-      const input = document.createElement('input')
-      input.type = 'file'
-      input.accept = 'image/*'
-      input.style.display = 'none'
+    replaceImage(event: Event, index: number): void {
+      event.preventDefault()
+      const input: any = event.target
 
-      input.onchange = e => {
-        if (input.files?.length) {
-          this.images[index] = URL.createObjectURL(input.files[0])
-          this.imageBlobs[index] = input.files[0]
+      if (!input || !input.files.length || !input.files[0]) return
 
-          this.saveData()
+      this.images[index] = URL.createObjectURL(input.files[0])
+      this.imageBlobs[index] = input.files[0]
 
-          this.keys[index] += 1
+      this.saveData()
 
-          input.remove()
-        }
-      }
-
-      input.click()
+      this.keys[index] += 1
     },
     removeImage(index: number) {
       this.images.splice(index, 1)

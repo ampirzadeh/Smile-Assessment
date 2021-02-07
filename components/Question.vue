@@ -1,7 +1,7 @@
 <template>
   <div class="container w-full mx-auto my-2">
     <h3 class="px-3 m-0 font-semibold rounded-t md:px-6">{{ title }}</h3>
-    <div class="flex flex-col flex-wrap justify-around px-3 sm:flex-row md:px-6">
+    <div class="flex flex-wrap justify-around px-3 md:px-6">
       <slot />
     </div>
   </div>
