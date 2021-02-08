@@ -27,7 +27,7 @@ export interface Record
 //   email: string
 //   phone: string
 //   image: string
-//   interestedTreatments: interestedTreatments[]
+//   treatments: interestedTreatments[]
 //   reason: reason
 //   teethDislike: string
 //   smileRate: number

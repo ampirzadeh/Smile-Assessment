@@ -1,10 +1,13 @@
-import { Handler } from "express";
-import Record from "../db/Record";
+import { Handler } from 'express'
+import Record from '../db/Record'
 
 export const answer: Handler = async (req, res) => {
   try {
-    await Record.findOneAndUpdate(req.body.id, { hasBeenAnsweredTo: true })
-
+    const record = await Record.findById(req.body.id)
+    if (record) {
+      record.hasBeenAnsweredTo = !record?.hasBeenAnsweredTo
+      record.save()
+    }
     res.json({
       success: true
     })

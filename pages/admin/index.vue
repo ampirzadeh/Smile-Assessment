@@ -1,66 +1,84 @@
 <template>
-  <div class="min-h-screen px-2 py-10 md:px-10 bg-primary">
-    <form
-      @submit.prevent="updateQuery"
-      class="flex flex-col items-end justify-between gap-2 px-3 md:flex-row"
-    >
-      <label class="flex flex-col w-full mr-auto text-white">
-        Search email, first name, last name, or phone:
-        <input
-          @keyup.enter="updateQuery"
-          type="text"
-          class="w-full text-black form-input rounded-xl"
-          v-model="searchQuery"
-          id="search"
-          name="search"
-        />
-      </label>
+  <div class="px-2 py-10 md:px-10">
+    <header class="flex items-end">
+      <div class="flex max-w-full tabs">
+        <nuxt-link
+          :to="{
+            query: {
+              search: searchQuery,
+              per_page: perPage.toString(),
+              page: '1',
+              show_answered: 'false'
+            }
+          }"
+          class="p-4 mx-0 mb-0 mr-2 bg-transparent rounded-b-none btn"
+          role="button"
+          :class="
+            $route.query.show_answered === 'false'
+              ? 'bg-white text-black'
+              : 'text-white hover:bg-white hover:bg-opacity-25 focus:bg-white focus:bg-opacity-25'
+          "
+        >
+          <span>New Smiles</span>
+        </nuxt-link>
+        <nuxt-link
+          :to="{
+            query: {
+              search: searchQuery,
+              per_page: perPage.toString(),
+              page: '1',
+              show_answered: 'true'
+            }
+          }"
+          class="p-4 mx-0 mb-0 mr-2 bg-transparent rounded-b-none btn"
+          role="button"
+          :class="
+            $route.query.show_answered === 'true'
+              ? 'bg-white text-black'
+              : 'text-white hover:bg-white hover:bg-opacity-25 focus:bg-white focus:bg-opacity-25'
+          "
+        >
+          <span>Archive</span>
+        </nuxt-link>
+      </div>
 
-      <label class="flex flex-col w-full text-white"
-        >Items shown per page:
-        <input
-          @keyup.enter="updateQuery"
-          type="number"
-          name="perpage"
-          id="perpage"
-          class="block w-full text-black form-input rounded-xl"
-          v-model="perPage"
-        />
-      </label>
-    </form>
+      <div class="flex-grow"></div>
 
-    <nuxt-link
-      :to="{
-        query: {
-          search: searchQuery,
-          per_page: perPage.toString(),
-          page: '1',
-          show_answered:
-            $route.query.show_answered === 'true' ? 'false' : 'true'
-        }
-      }"
-      class="flex justify-center w-full mt-6 text-white bg-transparent btn"
-      role="button"
-    >
-      <RefreshIcon class="mx-3" />
-      <span>{{
-        $route.query.show_answered === 'true' ? 'Answered' : 'Not Answered'
-      }}</span>
-    </nuxt-link>
+      <form class="w-1/2 mb-auto md:w-1/3" @submit.prevent="updateQuery">
+        <label class="flex flex-col w-full mr-auto text-white">
+          Search email, first name, last name, or phone:
+          <input
+            @keyup.enter="updateQuery"
+            type="text"
+            class="w-full text-black form-input rounded-xl"
+            v-model="searchQuery"
+            id="search"
+            name="search"
+          />
+        </label>
+      </form>
+    </header>
 
     <template v-if="records.length">
       <transition-group
+        tag="section"
         name="fade-no-leave"
-        class="flex flex-row flex-wrap gap-2 mb-6"
+        class="flex flex-wrap gap-2"
       >
         <RecordCard
-          v-for="record in records"
+          v-for="(record, index) in records"
           :key="record._id"
           :record="record"
+          :index="index"
         />
       </transition-group>
 
-      <Pagination v-if="pagesCount > 1" :max="pagesCount" :per-page="perPage" />
+      <Pagination
+        v-if="pagesCount > 1"
+        class="absolute bottom-0 left-0 right-0 m-10"
+        :max="pagesCount"
+        :per-page="perPage"
+      />
     </template>
   </div>
 </template>

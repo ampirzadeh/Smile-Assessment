@@ -2,7 +2,8 @@
   <nuxt-link
     :to="{ name: 'admin-id', params: { id: record._id } }"
     prefetch
-    class="flex flex-col w-full p-6 text-sm transition-all duration-300 bg-white rounded-md shadow md:w-1/3"
+    class="flex flex-col w-full p-6 text-sm transition-all duration-300 bg-white rounded-md shadow sm:w-5/12 md:w-1/3"
+    :class="{ 'rounded-tl-none': !index && $route.query.show_answered === 'false' }"
   >
     <h1 class="text-lg font-semibold font-montserrat">
       {{ fullName }}
@@ -34,6 +35,10 @@ export default Vue.extend({
   props: {
     record: {
       type: Object as PropType<Record>,
+      required: true
+    },
+    index: {
+      type: Number,
       required: true
     }
   },

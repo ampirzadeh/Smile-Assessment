@@ -117,7 +117,9 @@
         type="button"
         @click="answered"
       >
-        Mark as answered
+        {{
+          record.hasBeenAnsweredTo ? 'Mark as unanswered' : 'Mark as answered'
+        }}
       </button>
     </footer>
   </div>
@@ -156,7 +158,7 @@ export default Vue.extend({
     answered() {
       this.$axios
         .$post(
-          '/api/answered',
+          '/api/toggleAnswered',
           {
             id: this.$route.params.id
           },

@@ -10,6 +10,6 @@ router.post('/saveRecord', upload.array('images', 4), newRecord)
 router.use('/login', locked, (req, res) => res.sendStatus(200))
 router.get('/records', locked, recordController)
 router.get('/image/:key', OneImage)
-router.post('/answered', locked, answer)
+router.post('/toggleAnswered', locked, answer)
 
 export default router

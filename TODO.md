@@ -5,4 +5,4 @@
 - ~~push images~~
 - ~~space between thank you and paragraph and increase line height~~
 - ~~start again button~~
-- authentication for admin api
+- ~~authentication for admin api~~
