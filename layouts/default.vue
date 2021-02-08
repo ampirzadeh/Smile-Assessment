@@ -11,7 +11,10 @@
       <StepCircles v-if="!!step" :step="step" :max-step="maxStep" />
     </header>
 
-    <main class="min-h-screen bg-primary">
+    <main
+      class="min-h-screen"
+      :class="{ 'bg-primary': $route.name !== 'admin-id' }"
+    >
       <nuxt />
     </main>
   </div>
@@ -56,7 +59,6 @@ export default Vue.extend({
 .fade-leave-to {
   opacity: 0;
 }
-
 
 .fade-no-leave-leave-active {
   transition: none;

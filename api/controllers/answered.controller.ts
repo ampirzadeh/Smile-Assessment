@@ -7,7 +7,7 @@ export const answer: Handler = async (req, res) => {
     if (record) {
       record.hasBeenAnsweredTo = !record?.hasBeenAnsweredTo
       record.save()
-    }
+  }
     res.json({
       success: true
     })

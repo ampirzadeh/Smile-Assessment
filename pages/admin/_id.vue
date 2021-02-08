@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex flex-col p-4 mx-auto mt-10 text-white">
+  <div class="container flex flex-col min-h-screen p-4 mx-auto mt-10">
     <header>
       <h1 class="text-2xl font-semibold font-montserrat">
         {{ fullName }}
@@ -36,6 +36,14 @@
       <p v-if="record.smileRate">
         <b class="font-semibold">Smile rating: </b> {{ record.smileRate }}
       </p>
+
+      <p v-if="record.email">
+        <b class="font-semibold">Email: </b> {{ record.email }}
+      </p>
+
+      <p v-if="record.phone">
+        <b class="font-semibold">Phone: </b> {{ record.phone }}
+      </p>
     </section>
 
     <modal
@@ -69,51 +77,26 @@
       </transition-group>
     </section>
 
-    <footer>
-      <label for="subject" class="flex flex-col my-2">
-        Email Subject:
-        <input
-          v-model="emailSubject"
-          class="text-black form-input"
-          type="text"
-          name="subject"
-          id="subject"
-        />
-      </label>
+    <footer class="flex text-black">
+      <Mailto
+        :mail="record.email"
+        title="Write me a email"
+        href="mailto:"
+        class="w-1/4 h-full py-3 text-base bg-bgColor btn"
+        type="button"
+      >
+        Email: {{ record.email }}
+      </Mailto>
 
-      <label for="body" class="flex flex-col my-2">
-        Email Body:
-        <input
-          v-model="emailBody"
-          class="text-black form-input"
-          type="text"
-          name="body"
-          id="body"
-        />
-      </label>
-
-      <div class="text-black md:flex">
-        <Mailto
-          :mail="record.email"
-          :subject="emailSubject"
-          title="Write me a email"
-          href="mailto:"
-          class="w-full h-full py-3 text-base bg-bgColor btn"
-          type="button"
-          :body="emailBody"
-        >
-          Email
-        </Mailto>
-
-        <a
-          class="w-full py-3 text-base btn bg-bgColor"
-          :href="`tel:+${record.phone}`"
-          >Phone</a
-        >
-      </div>
+      <a
+        class="w-1/4 py-3 text-base btn bg-bgColor"
+        :href="`tel:+${record.phone}`"
+      >
+        Phone: {{ record.phone }}
+      </a>
 
       <button
-        class="w-full py-3 text-white btn bg-accent"
+        class="w-1/2 py-3 text-white btn bg-accent"
         type="button"
         @click="answered"
       >

@@ -13,25 +13,25 @@
 
         <br />
 
-        <transition name="fade">
+        <transition name="fade-no-leave">
           <StepZero v-show="step === 0" />
         </transition>
-        <transition name="fade">
+        <transition name="fade-no-leave">
           <StepOne v-show="step === 1" v-model="stepOne" />
         </transition>
-        <transition name="fade">
+        <transition name="fade-no-leave">
           <StepTwo v-show="step === 2" v-model="stepTwo" />
         </transition>
-        <transition name="fade">
+        <transition name="fade-no-leave">
           <StepThree v-show="step === 3" v-model="stepThree" />
         </transition>
-        <transition name="fade">
+        <transition name="fade-no-leave">
           <StepFour v-show="step === 4" v-model="stepFour" />
         </transition>
-        <transition name="fade">
+        <transition name="fade-no-leave">
           <StepFive v-show="step === 5" v-model="stepFive" />
         </transition>
-        <transition name="fade">
+        <transition name="fade-no-leave">
           <StepSix v-show="step === 6" v-model="stepSix" />
         </transition>
       </section>
