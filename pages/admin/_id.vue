@@ -1,11 +1,21 @@
 <template>
-  <div class="container flex flex-col min-h-screen p-4 mx-auto mt-10">
-    <header>
-      <h1 class="text-2xl font-semibold font-montserrat">
-        {{ fullName }}
-      </h1>
+  <div class="container mx-auto mt-10">
+    <header class="flex flex-col items-start gap-3 mb-3">
+      <button
+        @click="$router.go(-1)"
+        class="flex items-center w-auto gap-2 p-3 m-0 bg-white rounded-full outline-none focus:shadow-outline hover:shadow-outline focus:outline-none btn"
+      >
+        <BackIcon />
+        Back
+      </button>
 
-      <p>{{ formattedGender }}, {{ record.age }}</p>
+      <section>
+        <h1 class="text-2xl font-semibold font-montserrat">
+          {{ fullName }}
+        </h1>
+
+        <p>{{ formattedGender }}, {{ record.age }}</p>
+      </section>
     </header>
 
     <section>
@@ -110,8 +120,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import BackIcon from '~/assets/icons/arrow-left.svg?inline'
 
 export default Vue.extend({
+  components: {
+    BackIcon
+  },
   transition: 'fade',
   head() {
     return { title: (this as any).fullName }
